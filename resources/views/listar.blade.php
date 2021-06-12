@@ -11,10 +11,18 @@
     table {
         margin: auto;
     }
+    button a {
+        text-decoration: none;
+        color: #000;
+    }
 </style>
 <body>
 	<h1>Listar produtos</h1>
-	<p><a href="/produto/novo">Novo Usuário</a></p>
+
+	<button style="margin-bottom: 15px;">
+        <a href="/produto/novo">Novo Usuário</a>
+    </button>
+
 	@if(session('mensagem'))
 		<p>{{ session('mensagem') }}</p>
 	@endif

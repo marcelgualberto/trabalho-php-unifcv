@@ -32,7 +32,7 @@ class ProdutoController extends Controller
      */
     public function create()
     {
-        //
+        return view('cadastro');
     }
 
     /**
@@ -43,7 +43,21 @@ class ProdutoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'descricao' => 'required|min:3|max:255',
+            'valor' => 'required|numeric',
+            'quantidade' => 'required|numeric'
+        ]);
+
+        $validated['slug'] = $this->criarSlug($validated['descricao']);
+
+        $isOk = DB::table('produtos')->insert($validated);
+
+        if (! $isOk) {
+            return response()->with('mensagem', 'Erro ao adicionar produto');
+        }
+
+        return redirect('produtos')->with('mensagem', 'Produto adicionado com sucesso!');
     }
 
     /**
@@ -89,5 +103,20 @@ class ProdutoController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Create a slug string.
+     *
+     * @param  string  $descricao
+     * @return string
+     */
+    private function criarSlug($descricao)
+    {
+        if (str_word_count($descricao, 0) <= 1){
+            return $descricao;
+        }
+
+        return str_replace(' ', '-', $descricao);
     }
 }
