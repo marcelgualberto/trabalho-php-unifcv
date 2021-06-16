@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use League\CommonMark\Extension\Table\Table;
 
 class ProdutoController extends Controller
 {
@@ -79,7 +80,11 @@ class ProdutoController extends Controller
      */
     public function edit($id)
     {
-        //
+
+        $produto = DB::table('produtos')-> where('id', $id)->first();
+        return view('editar',['produto' => $produto]);
+
+        
     }
 
     /**
@@ -91,7 +96,15 @@ class ProdutoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $produto = [
+            'descricao' => $request ->input ('descricao'),
+            'valor' => $request ->input ('valor'),
+            'quantidade' => $request ->input ('quantidade'),
+        ];
+
+        DB::Table('produtos') -> where('id',$id)-> update($produto);
+        return redirect('produtos');
+        
     }
 
     /**
