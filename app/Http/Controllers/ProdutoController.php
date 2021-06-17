@@ -102,7 +102,15 @@ class ProdutoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $isOk = DB::table('produtos')->delete($id); 
+
+
+        if (! $isOk) {
+            return redirect('produtos')->with('mensagem','Produto inexistente!');
+        }
+        
+
+        return redirect('produtos')->with('mensagem', 'Produto removido com sucesso!'); 
     }
 
     /**
