@@ -69,7 +69,12 @@ class ProdutoController extends Controller
      */
     public function show($id)
     {
-        //
+        $produto = DB::table('produtos')->where('id', $id)->first();
+        
+        // Formata o valor da moeda para o tipo PT-BR
+        $produto->valor = number_format($produto->valor, 2, ',', '.');
+
+        return view('exibir', ['produto' => $produto]);
     }
 
     /**
