@@ -20,5 +20,6 @@ Route::get('/', function() {
 Route::get('/produtos', [ProdutoController::class, 'index']);
 Route::get('/produto/novo', [ProdutoController::class, 'create']);
 Route::post('/produto/salvar', [ProdutoController::class, 'store']);
+Route::get('/produto/apagar/{id}',[ProdutoController::class, 'destroy']);
 Route::get('/produto/editar/{id}',[ProdutoController::class, 'edit']);
 Route::post('/produto/gravar/{id}',[ProdutoController::class, 'update']);
